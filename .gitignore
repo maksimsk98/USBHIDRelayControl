@@ -1,0 +1,34 @@
+# =================== Exclude from ignore files =================== #
+# IDEs
+.vs
+.vscode
+.cursor
+.cursorignore
+.claude
+.idea
+
+# Any build files
+build*/
+
+
+# Installers for Linux and Windows
+Output/
+*.run
+
+*.7z
+*.zip
+*.bak
+*.log
+*.dmp
+*.mdfx
+*.gch
+*.pch
+# *.
+
+*.ilk
+*.o
+*.out
+*.obj
+*.iobj
+*.bsc
+*.msi
