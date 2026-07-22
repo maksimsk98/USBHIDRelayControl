@@ -1,0 +1,23 @@
+.pumpTable {
+  width: 100%;
+  overflow-x: auto;
+  padding: 5px 0px;
+  overflow-y: auto;
+  scrollbar-gutter: stable;  
+
+  display: flex;
+  flex-direction: column;
+  
+  height: auto;     /* grows with content, not container */
+  max-height: 100%; /* allows to fill if parent gives height */
+  flex: 0 1 auto;   /* this line fixes the “pushing” behavior */
+}
+
+.table {
+  width: auto;
+  border-collapse: collapse;
+  margin-bottom: 0px !important;
+  font-size: 12px;
+  table-layout: auto;
+}
+

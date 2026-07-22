@@ -1,0 +1,99 @@
+
+/* Only when body has use-add-peak, override Plotly’s nsewdrag cursor */
+.peak-mode-add .js-plotly-plot .nsewdrag,
+.peak-mode-add .js-plotly-plot .nsewdrag * {
+  cursor: url('/src/assets/coursors/addPeak.cur'), auto !important;
+}
+
+/* Only when body has use-delete-peak, override Plotly’s nsewdrag cursor */
+.peak-mode-delete .js-plotly-plot .nsewdrag,
+.peak-mode-delete .js-plotly-plot .nsewdrag * {
+  cursor: url('/src/assets/coursors/deletePeak.cur'), auto !important;
+}
+
+.sneak-pointy-force-move { /* plotly kills all cursor classes with regex match, so yeah */
+  cursor: move !important;
+}
+
+.custom-active-mod-button path {
+  fill: rgba(68, 68, 68, 0.7) !important;
+}
+
+/* Match only when one pane is really collapsed */
+.split-view:has(
+    > .split-view-container
+      > .split-view-view[style*="width: 0px"]
+) > .sash-container > .sash {
+  
+  
+}
+
+/* Draw a drop‐shadow behind the sash as a ::before */
+.split-view:has(
+    > .split-view-container
+      > .split-view-view[style*="width: 0px"]
+) > .sash-container > .sash::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 4px;            /* move equal to width so shadow is at the same place as sash will show up on hover */
+  width: 4px;        /* Match sash width */
+  z-index: 0;
+  pointer-events: auto;
+
+  box-shadow: 0 0 8px 4px rgba(var(--bs-primary-rgb), 0.3);
+}
+
+/* Solid primary on hover or active */
+.split-view:has(
+    > .split-view-container
+      > .split-view-view[style*="width: 0px"]
+) > .sash-container > .sash:hover,
+.split-view:has(
+    > .split-view-container
+      > .split-view-view[style*="width: 0px"]
+) > .sash-container > .sash:active {
+  background-color: var(--bs-primary);
+}
+
+.focus-flare:focus {
+  outline: none; /* remove orange outline */
+  border-color: rgba(0, 123, 255, 0.3); /* subtle Bootstrap primary blue flare */
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2); /* soft glow */
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Base title */
+.rct-tree-custom-title {
+  color: var(--bs-body-color);
+  transition: color 120ms ease, background-color 120ms ease;
+  border-radius: 4px;
+  padding: 2px 4px;
+}
+
+/* Hover — ONLY when NOT focused */
+.rct-tree-item-li:not(.rct-tree-item-li-focused):hover
+  > div > button > div > .rct-tree-custom-title {
+  background-color: var(--bs-primary-bg-subtle);
+}
+
+/* Focused — always wins */
+.rct-tree-item-li-focused
+  > div > button > div > .rct-tree-custom-title {
+  background-color: var(--bs-primary);
+  color: var(--bs-white);
+}
+
+
+/* keyboard focus ring look without ugly black border */
+.rct-tree-item-button:focus-visible {
+   outline: none;
+}
+
+.rct-tree-item-button-search-match {
+  background-color: #d4edda;  /* subtle Bootstrap green */
+  font-weight: bold;
+  border-radius: 0.25rem;     /* optional soft corners */
+}
+

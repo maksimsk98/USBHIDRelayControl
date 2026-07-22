@@ -1,0 +1,41 @@
+.fileTree {
+  --ft-highlight: #e1f4ff;  /* selected row background */
+  --ft-text: #1f2937;       /* text on selected */
+  --ft-primary: #0d6efd;    /* bootstrap-ish blue */
+  --ft-primary-focus: rgba(13,110,253,.25);
+  --ft-checkbox-bg: #fff;
+  --ft-checkbox-border: rgba(0,0,0,.25);
+  --ft-checkbox-hover: rgba(0,0,0,.35);
+}
+
+.fileTree :global(.rc-tree-treenode .rc-tree-node-content-wrapper) {
+  display: inline-flex;         /* inline element; highlight hugs the text area */
+  align-items: center;
+  vertical-align: middle;       /* align with the checkbox line */
+  padding: 2px 8px;
+  border-radius: .375rem;
+  transition: background 120ms, color 120ms, box-shadow 120ms;
+}
+
+/* keep your hover/selected styles — they'll now apply only to the title area */
+.fileTree :global(.rc-tree-treenode .rc-tree-node-content-wrapper:hover) {
+  background: color-mix(in srgb, #e1f4ff 60%, transparent);
+}
+.fileTree :global(.rc-tree-treenode .rc-tree-node-content-wrapper.rc-tree-node-selected) {
+  background: #e1f4ff;          /* your highlight */
+  color: #1f2937;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.06) inset;
+}
+
+/* optional: align the checkbox nicely next to the title */
+.fileTree :global(.rc-tree-treenode .rc-tree-checkbox) {
+  margin-right: .5rem;
+  vertical-align: middle;
+}
+
+/* if your title has an icon span, tiny spacing helps */
+.fileTree :global(.rc-tree-treenode .rc-tree-iconEle) {
+  margin-right: 6px;
+}
+
+.fileTree :global(.rc-tree-treenode .rc-tree-title) { white-space: nowrap; }

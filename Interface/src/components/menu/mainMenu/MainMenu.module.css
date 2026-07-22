@@ -1,0 +1,39 @@
+/* Target only the .btn within a global .btn-group */
+:global(.btn-group) .btn {
+  border-radius: 0 !important; /* Forces the border-radius to 0 for middle buttons */
+  margin-right: -1px; /* Ensure buttons are flush with each other */
+}
+
+/* Ensure border-radius on first and last buttons */
+:global(.btn-group) .btn:first-of-type {  /* last type because react-menu creates element dynamicly that not btn */
+  border-top-left-radius: 0.25rem !important;
+  border-bottom-left-radius: 0.25rem !important;
+}
+
+:global(.btn-group) .btn:last-of-type {
+  border-top-right-radius: 0.25rem !important;
+  border-bottom-right-radius: 0.25rem !important;
+}
+
+.menuZFix :global(.szh-menu) {
+  z-index: 9999 !important;
+}
+
+.mainMenuContainer {
+  display: flex;
+  justify-content: left;
+  align-items: start; /* Ensures vertical alignment */
+  gap: 100px; /* Adds spacing between elements */
+}
+
+.menuAndControlsContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.calibrationAndMetodsContainer {
+  display: flex;
+  justify-content: left;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+}

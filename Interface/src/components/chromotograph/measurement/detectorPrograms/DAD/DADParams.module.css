@@ -1,0 +1,12 @@
+.dadTable :global(.form-control) {
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.dadTable :global(.form-control:focus) {
+  border: none;
+  box-shadow: none;
+}

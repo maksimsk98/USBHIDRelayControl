@@ -1,0 +1,12 @@
+.watermark {
+  position: fixed;
+  top: 98%;
+  left: 95%;
+  transform: translate(-50%, -50%);
+  font-size: 10px; /* Large font size for visibility */
+  color: rgba(0, 0, 0, 0.5); /* Transparent black color for the watermark */
+  pointer-events: none; /* Allow interaction with underlying elements */
+  z-index: 9999; /* Ensure it appears on top of all content */
+  user-select: none; /* Prevent selection of the watermark text */
+  white-space: nowrap; /* Prevent text from breaking into multiple lines */
+}

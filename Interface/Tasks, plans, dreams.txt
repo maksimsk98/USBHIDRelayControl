@@ -1,0 +1,6 @@
+major: 
+1) ui reacton to failed uploads from package
+2) warn on indexed edited but not saved before package save
+
+___________________________________________________________________________
+1) проверь как перезапуск работает с hash id // all good immut and new uiid

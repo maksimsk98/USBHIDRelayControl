@@ -1,0 +1,46 @@
+.gradientTable tbody {
+    max-height: 462px;
+    overflow-y: auto;
+    display: block;
+}
+
+.gradientTable thead,
+.gradientTable tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+  
+.gradientTable .inputField {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 8px;
+    border: none;
+    background-color: transparent;
+}
+
+.gradientTable .inputField:focus {
+    outline: 2px solid #cce5ff;
+    outline-offset: 0;
+}
+
+.gradientTable .tableCell {
+    padding: 0;
+    margin: 0;
+    position: relative;
+}
+
+/* Lighter background color for the focused row */
+.focusedRow {
+background-color: #e1f4ff; /* Very light blue background */
+}
+
+.focusedRow td, .focusedRow th {
+background-color: inherit !important; /* Ensure <td> and <th> inherit the background */
+}
+
+.focusedRow input {
+background-color: inherit !important; /* Ensure inputs inherit the row background */
+}
+  

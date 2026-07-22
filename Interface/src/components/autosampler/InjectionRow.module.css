@@ -1,0 +1,13 @@
+/* Lighter background color for the focused row */
+.focusedRow {
+background-color: #e1f4ff; /* Very light blue background */
+}
+
+.focusedRow td, .focusedRow th {
+background-color: inherit !important; /* Ensure <td> and <th> inherit the background */
+}
+
+.focusedRow input {
+background-color: inherit !important; /* Ensure inputs inherit the row background */
+}
+  

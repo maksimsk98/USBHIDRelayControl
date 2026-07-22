@@ -1,0 +1,32 @@
+.controlPanel .btnCustom {
+  background-color: #ffffff;
+  padding: 1px 4px;
+}
+
+.controlPanel .btnCustom:hover {
+  background-color: #f0f0f0;
+}
+
+.controlPanel .btnCustom:disabled {
+  background-color: #ffffff;
+}
+
+.controlPanel .btnCustom:disabled .icon {
+  filter: grayscale(100%);
+}
+
+.controlPanel .icon {
+  width: 27px;
+  height: 27px;
+/*   fill: currentColor; */
+}
+
+.controlPanel .toggled {
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2); /* Creates a pressed effect */
+  background-color: rgba(0, 123, 255, 0.1); /* Subtle highlight without hiding icon */
+}
+
+.controlPanel .toggled .icon {
+  filter: brightness(1.2); /* Slightly brightens the icon */
+}
+

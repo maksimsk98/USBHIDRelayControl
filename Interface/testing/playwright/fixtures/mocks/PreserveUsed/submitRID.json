@@ -1,0 +1,122 @@
+{
+    "options": {
+      "autoMark": true,
+      "autoSave": true,
+      "calibrationFolder": "%tГрадуировки",
+      "folder": "%t",
+      "minimalTime": 2,
+      "name": "%y%m%d_%H%M_%s",
+      "saveBackground": false
+    },
+    "optionsSp": {
+      "autoSave": false,
+      "folder": "%tСпектры",
+      "name": "Спектр_%c"
+    },
+    "chromaMiscData": {
+      "averaging": 1,
+      "thermostatTemp": null,
+      "isWritingBaseline": false
+    },
+    "detectorProgram": {
+      "stepsData": [
+        {
+          "from": 0,
+          "to": 300,
+          "component": "Glucose"
+        }
+      ]
+    },
+    "params": {
+      "temperature": 36,
+      "temperatureTolerance": 5,
+      "polarity": true,
+      "sampleRate": 10,
+      "autoZero": true,
+      "waitForTemperature": false
+    },
+    "passport": {
+      "sampleName": "",
+      "extendedName": "",
+      "volume": 0,
+      "dilution": 0,
+      "columnNum": "",
+      "sorbent": "",
+      "particleSize": 0,
+      "diameter": 0,
+      "length": 0,
+      "precolumn": false,
+      "eluentA": "",
+      "eluentB": "",
+      "flow": 0,
+      "pressure": 0,
+      "temperature": 0,
+      "comment": ""
+    },
+    "pumpProgramData": {
+      "pumpMode": "none"
+    },
+    "reportSectionChecks": {
+      "generalParams": {
+        "header": false,
+        "chromatograph": true,
+        "detector": true,
+        "pumps": true,
+        "thermostat": true,
+        "sample": true,
+        "comment": true,
+        "column": true,
+        "eluent": true,
+        "calibration": true,
+        "chromatogram": true,
+        "peakTable": true,
+        "gradTable": true,
+        "detectorProgram": true,
+        "pumpProgram": true,
+        "noiseEval": false
+      },
+      "peakParams": {
+        "number": true,
+        "exitTime": true,
+        "componentName": true,
+        "concentration": false,
+        "height": true,
+        "area": true,
+        "halfWidth": true,
+        "asymmetry": true,
+        "efficiency": true,
+        "resolution": true,
+        "relativeTime": false,
+        "peakValley": false
+      }
+    },
+    "integration": {
+      "useRelativeTimes": true,
+      "maxRelation": 15,
+      "searchWindow": 2,
+      "isSmoothingPulseChecked": true,
+      "isSmoothingAdaptiveChecked": true,
+      "isSmoothingCubicChecked": false,
+      "isSmoothingDoubleChecked": false,
+      "smoothingFactor": 1,
+      "smoothingWindow": 5,
+      "smoothingMinLevel": null,
+      "alternativeFilters": "none",
+      "useDriftCompensation": false,
+      "driftFrom": null,
+      "driftTo": null,
+      "markStart": null,
+      "minHeight": null,
+      "minHalfWidth": 5
+    },
+    "reportCalcParams": {
+      "noiseEval": {
+        "from": null,
+        "to": null
+      }
+    },
+    "name": "RIDTestSave",
+    "sourceMethod": null,
+    "type": "chroma",
+    "instrument": "RID"
+  }

@@ -1,0 +1,1 @@
+export const selectSessionId = (state) => state.sessionReducer.sessionId

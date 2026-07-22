@@ -1,0 +1,88 @@
+{
+    "calibrationList": [
+      {
+        "name": null,
+        "type": null
+      },
+      {
+        "name": "лдьодль",
+        "type": "Внутренняя нормализация"
+      }
+    ],
+    "chromaMiscData": {
+      "averaging": 1,
+      "thermostatTemp": 7
+    },
+    "detectorProgram": {
+      "stepsData": [
+        {
+          "from": 0,
+          "component": "A",
+          "to": 6
+        },
+        {
+          "component": "B",
+          "from": 6,
+          "to": 12
+        }
+      ]
+    },
+    "params": {
+      "temperature": 39,
+      "temperatureTolerance": 4,
+      "polarity": false,
+      "sampleRate": 5,
+      "autoZero": true,
+      "waitForTemperature": false
+    },
+    "integration": {
+      "driftCompensation": false,
+      "maxScaling": 0.2,
+      "peakWindow": 0.5,
+      "smoothing": 1200
+    },
+    "options": {
+      "autoMark": true,
+      "autoSave": true,
+      "calibrationFolder": "%t\\Градуировки",
+      "folder": "%t",
+      "minimalTime": 2,
+      "name": "%y%m%d-%H%M_%s",
+      "saveBackground": true
+    },
+    "optionsSp": {
+      "autoSave": true,
+      "folder": "%t\\Спектры",
+      "name": "Спектр_%c"
+    },
+    "passport": {
+      "comment": "Сорбиновая, бензойная кислоты в пище М 04-58-2009 (2014)\\\\С использованием ацетатного буферного раствора (pH 4.9)",
+      "diameter": 2.1,
+      "extendedName": "fasfds",
+      "flow": 200,
+      "length": 120,
+      "particleSize": 5,
+      "precolumn": true,
+      "sampleName": "консерванты в пище",
+      "sorbent": "Диасфер C18",
+      "thermostatTemp": 25,
+      "volume": 20
+    },
+    "pumpProgramData": {
+      "isocratProgram": {
+        "isAutoFill": false,
+        "conditioningTime": 7,
+        "fillFlowRate": 7,
+        "flowRate": 7,
+        "restart": true,
+        "startFlowRate": 7,
+        "startPressure": 7,
+        "thermostatTemp": 7
+      },
+      "pumpMode": "isocrat"
+    },
+    "template": {
+      "instrument": "RID"
+    },
+    "type": "chroma"
+  }

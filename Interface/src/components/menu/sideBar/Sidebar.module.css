@@ -1,0 +1,54 @@
+/* This ensures the sidebar takes the full height and allows the accordion to scroll */
+.sidebarContainer {
+  height: 100%; /* Full height */
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+.sidebarContent {
+  display: flex;
+  flex-direction: column;
+  min-width: min-content;
+  max-width: 300px;
+}
+
+.sidebarAccordion {
+  /* never shrink narrower than its contents */
+  min-width: min-content;
+  /* if you want a scrollbar when the sidebar container is too small: */
+}
+
+/* This targets only the accordion-button elements inside the sidebar container */
+.sidebarAccordion :global(.accordion-button:focus) {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Apply custom padding and font size to accordion buttons */
+.sidebarAccordion :global(.accordion-button) {
+  padding: 5px 10px; /* Decrease padding */
+  font-size: 0.875rem; /* Decrease font size (14px) */
+}
+
+/* Ensure sidebar accordion takes up available space */
+.sidebarAccordion {
+  flex-grow: 1; /* Accordion takes the available space */
+}
+
+/* Reduce padding and font size in input fields */
+.customInputGroup :global(.form-control) {
+  padding: 5px; /* Adjust input padding */
+  font-size: 0.875rem; /* Adjust input font size */
+}
+
+/* apply reduced padding & font-size everywhere you use bootstrap inputs/labels */
+.customInputGroup :global(.form-control),
+.sidebarAccordion :global(.form-control) {
+  padding: 5px;
+  font-size: 0.875rem;
+}
+.customInputGroup :global(.input-group-text),
+.sidebarAccordion :global(.input-group-text) {
+  padding: 5px 10px;
+  font-size: 0.875rem;
+}

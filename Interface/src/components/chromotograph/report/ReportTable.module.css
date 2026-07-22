@@ -1,0 +1,177 @@
+:root {
+  --report-font-size: var(--bs-body-font-size, 0.875rem);
+  --report-line-height: var(--bs-body-line-height, 1.5);
+  --report-font-family: var(--bs-body-font-family, 
+      system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif);
+  --report-font-weight-header: var(--bs-heading-font-weight, 600);
+  --report-font-weight-body: var(--bs-body-font-weight, 400);
+}
+
+/* OUTER border around entire table group */
+.tableContainer {
+  
+  border: 1px solid #ced4da;
+  background: white;
+  padding: 6px;               
+  border-radius: 4px;         
+}
+
+.tableWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  row-gap: 5px;
+
+  width: max-content;    /* shrink to content */
+  max-width: 100%;       /* stay inside page */
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+
+  /* This is the fix */
+  flex: 1 1 max-content;
+  min-width: 150px;       /* threshold for wrapping */
+  max-width: 300px;       /* prevents huge stretching */
+
+  border: 1px solid #dee2e6;
+  background: #fff;
+}
+
+/* HEADER CELL — Bootstrap-like */
+.headerCell {
+  padding: 4px 6px;
+
+  font-size: var(--report-font-size);
+  font-weight: var(--report-font-weight-header);
+  line-height: var(--report-line-height);
+  font-family: var(--report-font-family);
+
+  background: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+  white-space: nowrap;
+
+  color: #000 !important;      /* pitch black for print */
+}
+
+/* BODY CELL — Bootstrap-like */
+.bodyCell {
+  padding: 4px 6px;
+  border-top: 1px solid #eee;
+  white-space: nowrap;
+  
+  font-size: var(--report-font-size);
+  font-weight: var(--report-font-weight-body);
+  line-height: var(--report-line-height);
+  font-family: var(--report-font-family);
+
+  color: #000 !important;      /* pitch black for print */
+}
+
+.emptyMessage {
+  padding: 20px;
+  text-align: center;
+  color: #6c757d;       /* Bootstrap muted */
+  font-size: 14px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  background: #f8f9fa;
+}
+
+
+.reportBootstrapTable {
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  background: white;
+  max-width: 100%;
+
+  margin: 0 !important;
+}
+
+/* Header styling to match .headerCell */
+.reportBootstrapTable thead th {
+  background: #f8f9fa;
+  padding: 4px 6px;
+  border-bottom: 2px solid #dee2e6 !important;
+  white-space: nowrap;
+
+  font-size: var(--report-font-size);
+  font-weight: var(--report-font-weight-header);
+  line-height: var(--report-line-height);
+  font-family: var(--report-font-family);
+}
+
+/* Match table border feel with your column borders */
+.reportBootstrapTable td,
+.reportBootstrapTable th {
+  border: 1px solid #dee2e6 !important;
+  padding: 4px 6px !important;        
+  white-space: nowrap;
+
+  font-size: var(--report-font-size);
+  font-weight: var(--report-font-weight-body);
+  line-height: var(--report-line-height);
+  font-family: var(--report-font-family);
+
+  color: #000 !important;      /* pitch black for print */
+}
+
+
+
+/* soften hover */
+.reportBootstrapTable tbody tr:hover td {
+  background: #f3f3f3;
+}
+
+.bodyCell.hover {
+  background-color: #f3f3f3 ; /* Bootstrap table-hover background */
+}
+
+@media print {
+  /* NEVER break tables across pages */
+  table,
+  thead,
+  tbody,
+  tr,
+  th,
+  td {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* Prevent flex columns from splitting */
+  .tableWrapper,
+  .column {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* Prevent the whole container from breaking internally */
+  .tableContainer {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* Prevent awkward breaks before or after table blocks */
+  table {
+    page-break-before: auto;
+    page-break-after: auto;
+  }
+
+  /* Optional: ensure headers repeat naturally */
+  thead {
+    display: table-header-group !important;
+  }
+
+  tfoot {
+    display: table-footer-group !important;
+  }
+}
+
+@media print {
+  .tableBlock {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+}

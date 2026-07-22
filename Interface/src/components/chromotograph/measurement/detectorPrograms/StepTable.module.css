@@ -1,0 +1,115 @@
+.stepTable {
+  max-width: 700px;
+  overflow-x: auto;
+  width: 100%;
+  padding: 5px 0px;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+
+  display: flex;
+  flex-direction: column;
+  
+  height: auto;     /* grows with content, not container */
+  max-height: 100%; /* allows to fill if parent gives height */
+  flex: 0 1 auto;   /* this line fixes the “pushing” behavior */
+}
+
+.tablePrimaryThickBorder th,
+.tablePrimaryThickBorder td {
+  border-color: var(--bs-primary-border-subtle) !important;
+  border-style: solid !important;
+}
+
+.table {
+  border-collapse:collapse;
+  width: 100%;
+}
+
+.tableHeader {
+  font-size: 12px;
+  padding: 4px;
+  border: 1px solid grey;
+  text-align: left;
+  background-color: white;
+}
+
+.tableDefinition {
+  border: 1px solid grey;
+  text-align: left;
+  background-color: transparent !important;
+}
+
+.input {
+  font-size: 12px;
+  background-color: transparent !important;
+  border: none;
+  width: 100%;
+  padding: 4px 4px;
+  outline: none;
+}
+
+.inputEditable:hover {
+  background-color: #99ccff;
+}
+
+.inputEditable:focus {
+  outline: none;
+  padding: 3px 3px;
+  border: 1px solid #cce5ff
+}
+
+.focusedRow {
+  background-color: #e1f4ff;
+}
+
+.deleteCell {
+  width: 1%;
+  padding: 0;
+  white-space: nowrap;
+  text-align: center;
+  border: 1px solid transparent;
+  background-color: var(--bs-danger-bg-subtle);
+  color: var(--bs-danger);
+  cursor: pointer;
+}
+
+.deleteCell:hover {
+  background-color: var(--bs-danger);
+  color: #fff;
+  border-color: var(--bs-danger);
+}
+
+/* Reserve same space as delete cell, but fully hidden */
+.deleteCell.hiddenDelete {
+  visibility: hidden;
+  pointer-events: none;
+  background-color: transparent !important; /* hides bg */
+  border-width: 0 !important; /* hides border */
+}
+
+.plusRow {
+  cursor: pointer;
+  background-color: var(--bs-success-bg-subtle);
+  transition: background-color 0.15s ease;
+}
+
+.plusRow:hover {
+  background-color: var(--bs-success-border-subtle);
+}
+
+.plusCell {
+  text-align: center;
+  font-weight: 600;
+  color: var(--bs-success);
+  border: 1px solid grey;
+  user-select: none;
+  font-size: 14px;
+  padding: 0;
+}
+
+.plusCell:hover {
+  color: #fff;
+  background-color: var(--bs-success);
+  border-color: var(--bs-success);
+}
+

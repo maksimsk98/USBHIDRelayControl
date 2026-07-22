@@ -1,0 +1,16 @@
+/* Chrome, Edge, Electron (Blink/WebKit) */
+.noSpinner::-webkit-inner-spin-button,
+.noSpinner::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.noSpinner {
+  -moz-appearance: textfield;
+}
+
+/* Optional: to make sure it still looks like a normal Bootstrap field */
+.noSpinner {
+  appearance: textfield;
+}

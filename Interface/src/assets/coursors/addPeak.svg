@@ -1,0 +1,8 @@
+<svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+  <!-- the little line plot -->
+  <polyline points="10,50 25,40 40,20 55,45 70,30" fill="none" stroke="#000" stroke-width="2"></polyline>
+  <!-- highlight the peak with a circle + plus -->
+  <circle cx="40" cy="20" r="10" fill="#fff" stroke="#000" stroke-width="2"></circle>
+  <line x1="40" y1="12" x2="40" y2="28" stroke="#000" stroke-width="2"></line>
+  <line x1="32" y1="20" x2="48" y2="20" stroke="#000" stroke-width="2"></line>
+</svg>

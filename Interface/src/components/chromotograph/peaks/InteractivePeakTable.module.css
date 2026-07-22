@@ -1,0 +1,98 @@
+/* PeaksTable.module.css */
+
+.peaksTable {
+  max-width: 700px;
+  overflow-x: auto;
+  width: 100%;
+  padding: 5px 0px;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+
+  display: flex;
+  flex-direction: column;
+
+  height: auto;
+  max-height: 100%;
+  flex: 0 1 auto;
+}
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+/* Optional thick border mode (если понадобится позже) */
+.tablePrimaryThickBorder th,
+.tablePrimaryThickBorder td {
+  border-color: var(--bs-primary-border-subtle) !important;
+  border-style: solid !important;
+}
+
+.tableHeader {
+  font-size: 12px;
+  padding: 4px;
+  border: 1px solid grey;
+  text-align: left;
+  background-color: white;
+}
+
+.tableDefinition {
+  border: 1px solid grey;
+  text-align: left;
+  background-color: transparent !important;
+}
+
+/* shared input / select look */
+.input {
+  font-size: 12px;
+  background-color: transparent !important;
+  border: none;
+  width: 100%;
+  padding: 4px 4px;
+  outline: none;
+}
+
+.inputEditable:hover {
+  background-color: #99ccff;
+}
+
+.inputEditable:focus {
+  outline: none;
+  padding: 3px 3px;
+  border: 1px solid #cce5ff;
+}
+
+/* optional row highlight (на будущее) */
+.focusedRow {
+  background-color: #e1f4ff;
+}
+
+.inputDisabled {
+  background-color: #f5f5f5;
+  color: #999;
+
+}
+
+.tableRedacting {
+  border: 1px solid var(--bs-primary-border-subtle);
+}
+
+.tableRedacting tr,
+.tableRedacting th,
+.tableRedacting td {
+  border-color: var(--bs-primary-border-subtle) !important;
+  border-style: solid !important;
+}
+
+.tableRedacting :focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.cellControl {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  display: block;
+  padding: 0;
+}

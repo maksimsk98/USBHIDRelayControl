@@ -1,0 +1,20 @@
+.calibInputGroup :global(.btn.dropdown-toggle) {
+  min-width: 120px;
+}
+.calibInputGroup {
+  display: flex;
+  flex-wrap: nowrap !important;
+  align-items: center;
+  flex: 1 1 0%;
+  min-width: min-content;
+}
+
+/* flexible select field */
+.calibInputGroup :global(select.form-select) {
+  flex: 1 1 0%;
+  min-width: 200px;
+  max-width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

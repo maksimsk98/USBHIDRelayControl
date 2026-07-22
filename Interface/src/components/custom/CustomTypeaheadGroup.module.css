@@ -1,0 +1,23 @@
+.parentWide {
+    width: 100% !important;
+    min-width: unset !important;
+    max-width: 100% !important;
+}
+  
+.menuMd {
+    font-size: 1rem;           /* Bootstrap default font size (md) */
+}
+
+.menuSm {
+    font-size: 0.875rem;       /* Bootstrap form-select-sm font size */
+}
+
+.menuMd .dropdown-item {
+    padding: 0.375rem 0.75rem; /* Bootstrap default padding */
+}
+
+.menuSm .dropdown-item {
+    padding: 0.25rem 0.5rem;   /* Bootstrap form-select-sm padding */
+    line-height: 1.25;
+}
+  

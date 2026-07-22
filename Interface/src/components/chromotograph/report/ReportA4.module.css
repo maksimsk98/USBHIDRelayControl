@@ -1,0 +1,15 @@
+.a4Page {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 15mm;
+  margin: 0 auto;
+  background: white;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: block;
+}
+
+.a4Preview {
+  transform: scale(0.85);
+  transform-origin: top center;
+}

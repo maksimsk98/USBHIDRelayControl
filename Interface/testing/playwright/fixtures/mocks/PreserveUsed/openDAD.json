@@ -1,0 +1,404 @@
+{
+          "additionalStage": {
+            "maxDuration": 0,
+            "threshold": 0,
+            "window": 0
+          },
+          "archiveCalibrationName": "",
+          "automarkupParameters": {
+            "markStart": 0,
+            "minHalfWidth": 5,
+            "minHeight": 0
+          },
+          "calibrationTable": {
+            "substances": []
+          },
+          "chromaMiscData": {
+            "averaging": 1,
+            "thermostatTemp": 25
+          },
+          "chromatogramDateTime": "2024-04-18 11:29",
+          "chromatogramFileName": "D:/PEAK_EXPERT_WEB/Interface/testing/playwright/fixtures/mocks/mockChroma.mdfx",
+          "chromatographNumber": "",
+          "detectorFabricNumber": "002",
+          "detectorName": "DADName",
+          "detectorType": "DAD",
+          "integration": {
+            "isSmoothingAdaptiveChecked": true,
+            "isSmoothingCubicChecked": false,
+            "isSmoothingDoubleChecked": false,
+            "isSmoothingPulseChecked": true,
+            "maxRelation": 15,
+            "searchWindow": 2,
+            "useDriftCompensation": false,
+            "useRelativeTimes": true
+          },
+          "operatorName": "111",
+          "passport": {
+            "calibration": false,
+            "columnNum": "",
+            "comment": "",
+            "eluentA": "",
+            "eluentB": "",
+            "extendedName": "",
+            "precolumn": false,
+            "sampleName": "EPA_дегазация",
+            "sorbent": ""
+          },
+          "peakTable": [
+            {
+              "area": 0.542,
+              "asymmetry": 0.488767,
+              "efficiency": 6176.34,
+              "halfwidth": 16.2,
+              "height": 0.0323,
+              "isMasterPeak": false,
+              "isNotSeparatedLeft": false,
+              "isNotSeparatedLeftEnable": false,
+              "isNotSeparatedRight": false,
+              "isNotSeparatedRightEnable": false,
+              "isNotSeparatedWithNum": null,
+              "isRiderEnable": false,
+              "isRiderPeak": false,
+              "leftBoundary": 489,
+              "masterPeakNumber": null,
+              "peakNumber": 1,
+              "pvLeft": 0,
+              "pvRight": 0,
+              "resolution": 5.65962,
+              "riderPeakNumbers": [],
+              "rightBoundary": 543.2,
+              "time": 525.6
+            }
+          ],
+          "plotsData": {
+            "backgroundChromatogram": {
+              "x": [],
+              "y": []
+            },
+            "calculatedChromatogram": {
+              "x": [],
+              "y": []
+            },
+            "columnTemp": {
+              "x": [],
+              "y": []
+            },
+            "flowRateA1Points": {
+              "x": [],
+              "y": []
+            },
+            "flowRateA2Points": {
+              "x": [],
+              "y": []
+            },
+            "flowRateB1Points": {
+              "x": [],
+              "y": []
+            },
+            "flowRateB2Points": {
+              "x": [],
+              "y": []
+            },
+            "mainParams": {
+              "absMSD": 0.012007701884841689,
+              "range": 0.05027559883950768,
+              "relMSD": 151.8471477260275,
+              "signal": 0.007907755966879778
+            },
+            "measuredChromatogram": {
+              "x": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+              ],
+              "y": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+              ]
+            },
+            "photoParams": {
+              "absMSD": 1.3507062164216412,
+              "range": 7.477750910616962,
+              "relMSD": 9.308965129024745,
+              "signal": 14.509735482951028
+            },
+            "pressureA1Points": {
+              "x": [],
+              "y": []
+            },
+            "pressureA2Points": {
+              "x": [],
+              "y": []
+            },
+            "pressureB1Points": {
+              "x": [],
+              "y": []
+            },
+            "pressureB2Points": {
+              "x": [],
+              "y": []
+            },
+            "referenceParams": {
+              "absMSD": 2.93543179475822,
+              "range": 21.974068513035675,
+              "relMSD": 5.469794193812755,
+              "signal": 53.66622016745494
+            },
+            "roomTemp": {
+              "x": [],
+              "y": []
+            },
+            "signalPhoto": {
+              "x": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+              ],
+              "y": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+              ]
+            },
+            "signalRef": {
+              "x": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+              ],
+              "y": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+              ]
+            }
+          },
+          "pumpName": "Н 330",
+          "pumpNumber1": "0021",
+          "pumpNumber2": "0023",
+          "pumpNumber3": "",
+          "pumpNumber4": "",
+          "pumpProgramData": {
+            "gradientProgram": {
+              "conditioningTime": 5,
+              "fillFlowRate": 0,
+              "isAutoFill": false,
+              "isContinuousSupply": false,
+              "restartAfterStop": true,
+              "startFlowRate": 2000,
+              "startPressure": 1,
+              "startVolume": 20000,
+              "steps": [
+                {
+                  "A_H": 70,
+                  "A_K": 0,
+                  "B_H": 30,
+                  "B_K": 100,
+                  "flowRate": 300,
+                  "from": 0,
+                  "to": 25
+                },
+                {
+                  "A_H": 0,
+                  "A_K": 0,
+                  "B_H": 100,
+                  "B_K": 100,
+                  "flowRate": 300,
+                  "from": 25,
+                  "to": 26
+                }
+              ],
+              "switchingTime": 4,
+              "workingVolume": 1200
+            },
+            "pumpMode": "gradient"
+          },
+          "reportCalcParams": {
+            "noiseEval": null
+          },
+          "reportSectionChecks": {
+            "generalParams": {
+              "calibration": false,
+              "calibrationTable": false,
+              "chromatogram": false,
+              "chromatograph": false,
+              "column": false,
+              "comment": false,
+              "detector": false,
+              "detectorProgram": false,
+              "eluent": false,
+              "header": false,
+              "noiseEval": false,
+              "peakTable": false,
+              "pumpProgram": false,
+              "pumps": false,
+              "sample": false,
+              "thermostat": false
+            },
+            "peakParams": {
+              "area": false,
+              "asymmetry": false,
+              "componentName": false,
+              "concentration": false,
+              "efficiency": false,
+              "exitTime": false,
+              "halfWidth": false,
+              "height": false,
+              "number": false,
+              "peakValley": false,
+              "relativeTime": false,
+              "resolution": false
+            }
+          },
+          "sampleNamePart1": "EPA_дегазация",
+          "sampleNamePart2": "",
+          "sampleVolume": "",
+          "selectedCalibrationName": "",
+          "selectedTemplateName": "ПАУ_300",
+          "stepsData": [
+            {
+              "component": "A",
+              "from": 0,
+              "sample_wl": 250,
+              "sample_bw": 10,
+              "sample_rate": 20,
+              "time_constant": 10,
+              "to": 6
+            },
+            {
+              "component": "B",
+              "from": 6,
+              "sample_wl": 252,
+              "sample_bw": 12,
+              "sample_rate": 10,
+              "time_constant": 100,
+              "to": 12
+            }
+          ],
+          "params": {
+            "autoZero": true,
+            "channels": {
+              "A": {
+                "sample_wl": 248,
+                "sample_bw": 8,
+                "reference_wl": 440,
+                "reference_bw": 50,
+                "reference_use": true
+              },
+              "B": {
+                "sample_wl": 249,
+                "sample_bw": 9,
+                "reference_wl": 440,
+                "reference_bw": 50,
+                "reference_use": false
+              },
+              "C": {
+                "sample_wl": 250,
+                "sample_bw": 10,
+                "reference_wl": 440,
+                "reference_bw": 50,
+                "reference_use": false
+              },
+              "D": {
+                "sample_wl": 251,
+                "sample_bw": 11,
+                "reference_wl": 440,
+                "reference_bw": 50,
+                "reference_use": true
+              },
+              "E": {
+                "sample_wl": 252,
+                "sample_bw": 12,
+                "reference_wl": 444,
+                "reference_bw": 55,
+                "reference_use": true
+              },
+              "F": {
+                "sample_wl": 253,
+                "sample_bw": 8,
+                "reference_wl": 443,
+                "reference_bw": 51,
+                "reference_use": true
+              },
+              "G": {
+                "sample_wl": 254,
+                "sample_bw": 8,
+                "reference_wl": 442,
+                "reference_bw": 52,
+                "reference_use": true
+              },
+              "H": {
+                "sample_wl": 255,
+                "sample_bw": 8,
+                "reference_wl": 441,
+                "reference_bw": 50,
+                "reference_use": true
+              }
+            }
+          },
+          "thermostatName": "ТК 340",
+          "thermostatNumber": "0123",
+          "type": "chroma"
+        }

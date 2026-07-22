@@ -1,0 +1,140 @@
+/* Tab Container */
+.tabContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 12px;
+  border-radius: 4px !important;
+  height: 100%;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+  position: relative; /* Needed for absolute positioning */
+}
+
+.chromaActive {
+  background-color: #9ec5fe;
+  color: #052c65;
+  --progress-color: #0d6efd;
+  --tab-background: #9ec5fe;
+}
+
+.spectroActive {
+  background-color: #75b798;
+  color: #0b3623;
+}
+
+.calibActive {
+  background-color: #bfa3e6; /* Soft purple */
+  color: #3b1f73;            /* Deepened purple */
+
+}
+
+.chromaInactive {
+  background-color: #cfe2ff;
+  color: #0d6efd;
+  --tab-background: #cfe2ff;
+  --progress-color: #0d6efd;
+}
+
+.spectroInactive {
+  background-color: #d1e7dd;
+  color: #198754;
+}
+
+.calibInactive {
+  background-color: #e2d9f3; /* Soft purple (subtle) */
+  color: #5b2fa4; /* Emphasis purple */
+}
+
+/* Active Tab */
+.activeTab {
+  --tab-background: rgb(207, 226, 255); /* Light blue for active tab */
+  background-color: var(--tab-background) !important;
+}
+
+@keyframes stripeScroll {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 20px 0;
+  }
+}
+
+/* Progress Wrapper (Holds Mask) */
+.progressWrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  overflow: hidden; /* Ensures the mask effect */
+  background-color: inherit;
+}
+
+/* Moving Striped Progress Bar */
+.progressBar {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 4px;
+
+  background: repeating-linear-gradient(
+    45deg,
+    var(--progress-color) 0px,
+    var(--progress-color) 10px,
+    transparent 10px,
+    transparent 20px
+  );
+
+  background-size: 20px 20px; /* Matches stripe spacing */
+  animation: stripeScroll 2s linear infinite;
+}
+
+/* Mask to Reveal Progress */
+.progressWrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: var(--progress, 0%); /* Moves left as progress increases */
+  width: calc(100% - var(--progress, 0%) + 5px);
+  height: 100%;
+  background-color: var(--tab-background, rgb(236, 236, 236)); /* Fallback for non-selected tabs */
+  transition: left 0.4s ease-out;
+}
+
+/* Tab Title */
+.tabTitle {
+  flex-grow: 1;
+  font-weight: 500;
+  padding-right: 10px;
+}
+
+/* Close Button */
+.closeButton {
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px;
+  transition: color 0.2s ease-in-out;
+}
+
+.closeButton:hover {
+  color: red;
+}
+
+.packageActive {
+  background-color: #ffc89a;  /* richer pastel peach */
+  color: #5f361c;             /* darker brown for contrast */
+  /* --progress-color: #ff8d4b;   */
+  /* --tab-background: #ffc89a; */
+}
+
+.packageInactive {
+  background-color: #ffeada;  /* washed-out peach */
+  color: #a35c33;             /* softer text */
+  /* --progress-color: #ffb38a;   */
+  /* --tab-background: #ffeada; */
+}

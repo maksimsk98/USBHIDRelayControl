@@ -1,0 +1,6 @@
+{
+  "watch": ["src/server"],
+  "ext": "js,json",
+  "exec": "node src/server/server.js",
+  "signal": "SIGINT"
+}

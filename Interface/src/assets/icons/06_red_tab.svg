@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 27.9.5, SVG Export Plug-In . SVG Version: 9.03 Build 54986)  -->
+<svg version="1.1" id="_x30_6_x5F_red_x5F_tab" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+	 x="0px" y="0px" viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve">
+<path fill="#FFFFFF" stroke="#0083D1" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+	M55,54.5H9c-1.1,0-2-0.9-2-2v-41c0-1.1,0.9-2,2-2h46c1.1,0,2,0.9,2,2v41C57,53.6,56.1,54.5,55,54.5z"/>
+<line fill="none" stroke="#0083D1" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="24.1" y1="18.5" x2="24.1" y2="54.4"/>
+<line fill="none" stroke="#0083D1" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="55.4" y1="31.6" x2="8.9" y2="31.6"/>
+<line fill="none" stroke="#0083D1" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="55.4" y1="43.2" x2="8.9" y2="43.2"/>
+<line fill="none" stroke="#0083D1" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="41.5" y1="19" x2="41.5" y2="54.4"/>
+<g>
+	<rect x="8.5" y="10.9" fill="#004C99" width="47" height="7.8"/>
+</g>
+<line fill="none" stroke="#0083D1" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="55.5" y1="19.7" x2="7.7" y2="19.7"/>
+<g>
+	
+		<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="-136.8204" y1="50.1112" x2="-126.6977" y2="64.6564" gradientTransform="matrix(0.9783 -0.2072 0.2072 0.9783 155.5767 -51.157)">
+		<stop  offset="0" style="stop-color:#FFEC30"/>
+		<stop  offset="0.4741" style="stop-color:#F2B72A"/>
+		<stop  offset="1" style="stop-color:#E37723"/>
+	</linearGradient>
+	<polygon fill="url(#SVGID_1_)" stroke="#573006" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+		26,52.7 26,41.9 46.7,10.6 56.6,16.9 35.4,48.6 	"/>
+	<polygon fill="#FBE9CA" points="26.3,52 26.6,42.1 35,48.2 	"/>
+	<polygon fill="#BD3211" points="29.5,50.6 26.3,52 26.3,48.6 27.5,50 	"/>
+	<polygon fill="#BD3211" stroke="#7F250F" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="56.7,17 
+		52.7,22.9 42.8,16.5 46.8,10.6 	"/>
+</g>
+</svg>

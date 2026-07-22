@@ -1,0 +1,19 @@
+.nodeConfigModal {
+  width: fit-content !important;
+  max-width: 90vw;  /* hard ceiling so fit-content never grows beyond viewport */
+}
+
+/* Warning state for invalid nodes - subtle yellow glow */
+.nodeInvalid :global(.form-select),
+.nodeInvalid :global(.rbt-input-main) {
+  border-color: #ffc107;
+  box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Keep the existing focus style for when the field is active */
+.nodeInvalid :global(.form-select):focus,
+.nodeInvalid :global(.rbt-input-main):focus {
+  border-color: #ffc107;
+  box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.5);
+}

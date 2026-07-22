@@ -1,0 +1,24 @@
+.inputTable {
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 0px;
+}
+
+.inputTable .inputField {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding: 8px;
+  border: none;
+}
+
+.inputTable .inputField:focus {
+  outline: 2px solid #cce5ff;
+  outline-offset: 0;
+}
+
+.inputTable .tableCell {
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
