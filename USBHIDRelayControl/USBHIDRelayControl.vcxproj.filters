@@ -13,10 +13,39 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="AMQP">
+      <UniqueIdentifier>{b0fbf34c-b6bb-402a-a97c-95f317e59746}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{6f170e35-ce37-4d67-bdbb-2291cbb0ee30}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="USBHIDRelayControl.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="AMQP\BaseAMQP.cpp">
+      <Filter>AMQP</Filter>
+    </ClCompile>
+    <ClCompile Include="AMQP\PanelAMQP.cpp">
+      <Filter>AMQP</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\ThreadedTimer.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AMQP\BaseAMQP.h">
+      <Filter>AMQP</Filter>
+    </ClInclude>
+    <ClInclude Include="AMQP\PanelAMQP.hpp">
+      <Filter>AMQP</Filter>
+    </ClInclude>
+    <ClInclude Include="AMQP\Constants.hpp">
+      <Filter>AMQP</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ThreadedTimer.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

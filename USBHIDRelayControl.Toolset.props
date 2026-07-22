@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Toolset only - import immediately after Microsoft.Cpp.Default.props in
+  PeakExpertCE.vcxproj and 3rdparty.vcxproj so $(PeToolset) is available
+  for Configuration|Platform PlatformToolset.
+
+  Compile settings live in PeakExpertCE.Common.props (separate file so
+  MSBuild does not MSB4011-skip a second import of the same path).
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <!--
+      Single toolset for exe + 3rdparty. Matches the compiler that produced
+      libs\win_x64 (DChannel-build-info.json -> MSVC 19.51 / 14.51.36231).
+      Change it here once.
+    -->
+    <PeToolset Condition="'$(PeToolset)' == ''">v143</PeToolset>
+  </PropertyGroup>
+</Project>

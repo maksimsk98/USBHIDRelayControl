@@ -1,9 +1,9 @@
-﻿#include "../3rdparty/hidapi/hidapi.h"
+﻿#include "hidapi/hidapi.h"
 
 #include <iostream>
 #include <iomanip>
 #include <string>
-
+#include "AMQP/PanelAMQP.hpp"
 #pragma comment(lib, "hidapi.lib")
 
 constexpr unsigned short kVid = 0x0519;
@@ -132,6 +132,7 @@ int main()
 
     std::cout << "Device successfully opened.\n\n";
 
+
     wchar_t text[256];
 
     if (hid_get_manufacturer_string(dev, text, 256) == 0)
@@ -143,181 +144,40 @@ int main()
     if (hid_get_serial_number_string(dev, text, 256) == 0)
         std::wcout << L"Serial       : " << text << std::endl;
 
-    PrintHelp();
+    //PrintHelp();
+    // All Off before the start
+    SendCommand(dev, AllOff);
+
+    std::cout << "Off All relay.\n\n";
+
+    auto channel =
+        AmqpClient::Channel::Create(
+            "localhost"
+        );
+
+    auto panel =
+        std::make_unique<PanelAMQP>(
+            std::chrono::milliseconds(100),
+            channel
+        );
+
+    panel->setRelayDevice(dev);
+
+    panel->StartSoftTimerThread();
+
+    std::cout
+        << "Panel AMQP started\n";
 
     while (true)
     {
-        std::cout << "\nrelay> ";
-
-        std::string cmd;
-        std::cin >> cmd;
-
-        if (cmd == "exit")
-            break;
-
-        if (cmd == "help")
-        {
-            PrintHelp();
-            continue;
-        }
-
-        if (cmd == "allon")
-        {
-            SendCommand(dev, AllOn);
-            continue;
-        }
-
-        if (cmd == "alloff")
-        {
-            SendCommand(dev, AllOff);
-            continue;
-        }
-
-        if (cmd == "on")
-        {
-            int relay;
-            std::cin >> relay;
-
-            unsigned char c = GetOnCommand(relay);
-
-            if (c == 0)
-            {
-                std::cout << "Relay number must be from 1 to 6." << std::endl;
-                continue;
-            }
-
-            SendCommand(dev, c);
-            continue;
-        }
-
-        if (cmd == "off")
-        {
-            int relay;
-            std::cin >> relay;
-
-            unsigned char c = GetOffCommand(relay);
-
-            if (c == 0)
-            {
-                std::cout << "Relay number must be from 1 to 6." << std::endl;
-                continue;
-            }
-
-            SendCommand(dev, c);
-            continue;
-        }
-
-        std::cout << "Unknown command.\n";
-        std::cout << "Type 'help' to see available commands.\n";
+        std::this_thread::sleep_for(
+            std::chrono::seconds(1));
     }
+
+    panel->StopSoftTimerThread();
 
     hid_close(dev);
     hid_exit();
 
     return 0;
 }
-
-#if 0
-#include "../3rdparty/hidapi/hidapi.h"
-#include <windows.h>
-#include <stdio.h>
-
-
-void SetRelayMask(hid_device* dev, unsigned char mask)
-{
-    unsigned char report[9] =
-    {
-        0,      // Report ID
-        mask,   // состояние реле
-        0,0,0,
-        0,0,0,
-        0
-    };
-
-
-    int r = hid_write(
-        dev,
-        report,
-        sizeof(report)
-    );
-
-
-    printf(
-        "MASK %02X -> %d\n",
-        mask,
-        r
-    );
-}
-
-
-
-int main()
-{
-    hid_init();
-
-
-    hid_device* dev =
-        hid_open(
-            0x0519,
-            0x2018,
-            nullptr
-        );
-
-
-    if (!dev)
-    {
-        printf("open failed\n");
-        return 1;
-    }
-
-
-    printf("opened\n");
-
-    unsigned char cmds[] = {
-    0xF1,
-    0xF2,
-    0xF3,
-    0xF4,
-    0xF5,
-    0xF6,
-    };
-
-    for (unsigned char cmd : cmds)
-    {
-        printf("\nCMD = %02X\n", cmd);
-        SetRelayMask(dev, cmd);
-        Sleep(3000);
-    }
-
-    unsigned char cmds2[] = {
-    0x01,
-    0x02,
-    0x03,
-    0x04,
-    0x05,
-    0x06,
-    };
-
-    for (unsigned char cmd : cmds2)
-    {
-        printf("\nCMD = %02X\n", cmd);
-        SetRelayMask(dev, cmd);
-        Sleep(3000);
-    }
-
-    SetRelayMask(dev, 0xF9);   // включились все реле
-    Sleep(3000);
-
-    SetRelayMask(dev, 0x01);   // выключить первое
-    Sleep(3000);
-
-    SetRelayMask(dev, 0x09);   // выключить все
-    Sleep(3000);
-
-    hid_close(dev);
-
-    hid_exit();
-
-    return 0;
-}
-#endif

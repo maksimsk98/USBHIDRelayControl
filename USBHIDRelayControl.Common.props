@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Shared ClCompile settings for USBHIDRelayControl.exe and 3rdparty.lib
+  (MSVC analogue of CMake INTERFACE compile options / definitions).
+
+  Import once in each .vcxproj AFTER Microsoft.Cpp.props.
+  PeToolset comes from PeakExpertCE.Toolset.props (imported earlier).
+
+  Project-specific flags (includes, /wd*, SDL, WPO/LTCG, HAVE_CONFIG_H,
+  Link, Distr, …) stay in the individual .vcxproj files.
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <!--
+        AMQP_STATIC / SimpleAmqpClient_EXPORTS: headers must match how
+        SimpleAmqpClient is linked (static, no dllimport thunks).
+        SPDLOG_COMPILED_LIB: spdlog+fmt live in 3rdparty.lib (not header-only).
+        BOOST_ALL_NO_LIB: Chrono is compiled into 3rdparty.lib; disable
+        #pragma comment(lib, "libboost_*") auto-link.
+      -->
+      <PreprocessorDefinitions>
+        WIN32;
+        WIN32_LEAN_AND_MEAN;
+        NOMINMAX;
+        _CRT_SECURE_NO_WARNINGS;
+        _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;
+        AMQP_STATIC;
+        SimpleAmqpClient_EXPORTS;
+        SPDLOG_COMPILED_LIB;
+        BOOST_ALL_NO_LIB;
+        %(PreprocessorDefinitions)
+      </PreprocessorDefinitions>
+      <!--
+        /utf-8 + /permissive- match DChannel's own build so both sides of the
+        DLL boundary agree. No /arch:AVX*/SSE* - portability is independent of
+        Optimization level on MSVC.
+      -->
+      <AdditionalOptions>
+        /Zc:__cplusplus 
+        /utf-8 
+        /permissive- 
+        /bigobj 
+        %(AdditionalOptions)
+      </AdditionalOptions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+
+  <ItemDefinitionGroup Condition="'$(Configuration)' == 'Debug'">
+    <ClCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+  </ItemDefinitionGroup>
+
+  <!--
+    Dynamic CRT (/MD) + /O1: match the prebuilt DChannel DLL and keep codegen
+    conservative for a distributable binary (not peak /O2).
+  -->
+  <ItemDefinitionGroup Condition="'$(Configuration)' == 'Release' or '$(Configuration)' == 'RelWithDebInfo' or '$(Configuration)' == 'MinSizeRel'">
+    <ClCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <SupportJustMyCode>false</SupportJustMyCode>
+      <Optimization>MinSpace</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+    </ClCompile>
+  </ItemDefinitionGroup>
+</Project>

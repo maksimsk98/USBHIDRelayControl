@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|Win32">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|Win32">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{825BA033-DC97-4210-A940-1FCC6BCC9568}</ProjectGuid>
+    <RootNamespace>ThirdParty</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(ProjectDir)..\USBHIDRelayControl.Toolset.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>$(PeToolset)</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>$(PeToolset)</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup
+    Condition="'$(Configuration)|$(Platform)'=='Release|Win32' or '$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32' or '$(Configuration)|$(Platform)'=='MinSizeRel|Win32'"
+    Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>$(PeToolset)</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup
+    Condition="'$(Configuration)|$(Platform)'=='Release|x64' or '$(Configuration)|$(Platform)'=='RelWithDebInfo|x64' or '$(Configuration)|$(Platform)'=='MinSizeRel|x64'"
+    Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>$(PeToolset)</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <!--
+    Do NOT enable WholeProgramOptimization (/GL) on this static lib.
+    Packaging /GL objs (especially spdlog's large TUs) into a .lib and then
+    LTCG-linking the consumer triggers MSVC LNK1179 "duplicate COMDAT" inside
+    spdlog.obj. PeakExpertNoGUI can still use /LTCG on its own code; 3rdparty
+    objects simply participate as regular COFF.
+  -->
+  <PropertyGroup Condition="'$(Configuration)'=='Release' or '$(Configuration)'=='MinSizeRel'">
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props"
+      Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')"
+      Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <!-- Shared ClCompile CRT/language/ABI macros - PeakExpertCE.Common.props -->
+  <Import Project="$(ProjectDir)..\USBHIDRelayControl.Common.props" />
+  <PropertyGroup Label="UserMacros" />
+  <!--
+    Keep .lib/.pdb under this project - never in PeakExpertNoGUI's deploy OutDir
+    (shared solution $(Platform)\$(Configuration) would otherwise collect them).
+    ProjectReference still passes TargetPath to the linker correctly.
+  -->
+  <PropertyGroup>
+    <OutDir>$(ProjectDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+
+  <!--
+    3rdparty-only ClCompile. Shared CRT/language/ABI macros come from
+    PeakExpertCE.Common.props. HAVE_CONFIG_H is rabbitmq-c specific
+    (config.h); harmless for the other libraries in this static lib.
+  -->
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>
+        $(ProjectDir);
+        $(ProjectDir)rabbitmq-c;
+        $(ProjectDir)rabbitmq-c\deprecated;
+        $(ProjectDir)boost;
+        %(AdditionalIncludeDirectories)
+      </AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+
+  <!--
+    ============================================================================
+    rabbitmq-c 0.17.0
+    Source:      https://github.com/alanxz/rabbitmq-c
+    Downloaded:  C:\Users\SemykinVD\Downloads\rabbitmq-c-0.17.0
+
+    Built WITHOUT SSL/AMQPS support: amqp_openssl.c / amqp_openssl_bio.* and the
+    win32\threads.* SSL locking shim are intentionally not included.
+    PeakExpertNoGUI only ever calls the plain AmqpClient::Channel::Create()
+    overload (never OpenSecureChannel/amqp_ssl_socket_*), so this doesn't lose
+    any used functionality and avoids pulling in OpenSSL as a dependency.
+    config.h is hand-written (not CMake-generated) - see its own comments.
+    ============================================================================
+  -->
+  <ItemGroup>
+    <ClCompile Include="rabbitmq-c\librabbitmq\amqp_api.c" />
+    <ClCompile Include="rabbitmq-c\librabbitmq\amqp_connection.c" />
+    <ClCompile Include="rabbitmq-c\librabbitmq\amqp_consumer.c" />
+    <ClCompile Include="rabbitmq-c\librabbitmq\amqp_framing.c" />
+    <ClCompile Include="rabbitmq-c\librabbitmq\amqp_mem.c" />
+    <ClCompile Include="rabbitmq-c\librabbitmq\amqp_socket.c" />
+    <ClCompile Include="rabbitmq-c\librabbitmq\amqp_table.c" />
+    <ClCompile Include="rabbitmq-c\librabbitmq\amqp_tcp_socket.c" />
+    <ClCompile Include="rabbitmq-c\librabbitmq\amqp_time.c" />
+    <ClCompile Include="rabbitmq-c\librabbitmq\amqp_url.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="rabbitmq-c\config.h" />
+    <ClInclude Include="rabbitmq-c\librabbitmq\amqp_private.h" />
+    <ClInclude Include="rabbitmq-c\librabbitmq\amqp_socket.h" />
+    <ClInclude Include="rabbitmq-c\librabbitmq\amqp_table.h" />
+    <ClInclude Include="rabbitmq-c\librabbitmq\amqp_time.h" />
+    <!--
+      Deprecated flat shims (upstream's include\*.h, as opposed to
+      include\rabbitmq-c\*.h) - kept together here instead of loose at the
+      3rdparty root, per upstream's own deprecation notice in each file.
+    -->
+    <ClInclude Include="rabbitmq-c\deprecated\amqp.h" />
+    <ClInclude Include="rabbitmq-c\deprecated\amqp_framing.h" />
+    <ClInclude Include="rabbitmq-c\deprecated\amqp_ssl_socket.h" />
+    <ClInclude Include="rabbitmq-c\deprecated\amqp_tcp_socket.h" />
+    <ClInclude Include="rabbitmq-c\amqp.h" />
+    <ClInclude Include="rabbitmq-c\export.h" />
+    <ClInclude Include="rabbitmq-c\framing.h" />
+    <ClInclude Include="rabbitmq-c\tcp_socket.h" />
+  </ItemGroup>
+
+  <!--
+    ============================================================================
+    SimpleAmqpClient 2.5.1
+    Source:      https://github.com/alanxz/SimpleAmqpClient
+    Downloaded:  C:\Users\SemykinVD\Downloads\SimpleAmqpClient-2.5.1
+
+    C++ wrapper around rabbitmq-c above. SSL support (SAC_SSL_SUPPORT_ENABLED)
+    is left undefined for the same reason rabbitmq-c is built without SSL -
+    Channel::OpenSecureChannel is never called.
+    ============================================================================
+  -->
+  <ItemGroup>
+    <ClCompile Include="SimpleAmqpClient\AmqpException.cpp" />
+    <ClCompile Include="SimpleAmqpClient\AmqpLibraryException.cpp" />
+    <ClCompile Include="SimpleAmqpClient\AmqpResponseLibraryException.cpp" />
+    <ClCompile Include="SimpleAmqpClient\BasicMessage.cpp" />
+    <ClCompile Include="SimpleAmqpClient\Channel.cpp" />
+    <ClCompile Include="SimpleAmqpClient\ChannelImpl.cpp" />
+    <ClCompile Include="SimpleAmqpClient\Envelope.cpp" />
+    <ClCompile Include="SimpleAmqpClient\MessageReturnedException.cpp" />
+    <ClCompile Include="SimpleAmqpClient\Table.cpp" />
+    <ClCompile Include="SimpleAmqpClient\TableImpl.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SimpleAmqpClient\AmqpException.h" />
+    <ClInclude Include="SimpleAmqpClient\AmqpLibraryException.h" />
+    <ClInclude Include="SimpleAmqpClient\AmqpResponseLibraryException.h" />
+    <ClInclude Include="SimpleAmqpClient\BadUriException.h" />
+    <ClInclude Include="SimpleAmqpClient\BasicMessage.h" />
+    <ClInclude Include="SimpleAmqpClient\Channel.h" />
+    <ClInclude Include="SimpleAmqpClient\ChannelImpl.h" />
+    <ClInclude Include="SimpleAmqpClient\ConnectionClosedException.h" />
+    <ClInclude Include="SimpleAmqpClient\ConsumerCancelledException.h" />
+    <ClInclude Include="SimpleAmqpClient\ConsumerTagNotFoundException.h" />
+    <ClInclude Include="SimpleAmqpClient\Envelope.h" />
+    <ClInclude Include="SimpleAmqpClient\MessageRejectedException.h" />
+    <ClInclude Include="SimpleAmqpClient\MessageReturnedException.h" />
+    <ClInclude Include="SimpleAmqpClient\SimpleAmqpClient.h" />
+    <ClInclude Include="SimpleAmqpClient\Table.h" />
+    <ClInclude Include="SimpleAmqpClient\TableImpl.h" />
+    <ClInclude Include="SimpleAmqpClient\Util.h" />
+    <ClInclude Include="SimpleAmqpClient\Version.h" />
+  </ItemGroup>
+
+  <!--
+    ============================================================================
+    nlohmann-json 3.11.3
+    Source: https://github.com/nlohmann/json
+    (already present in the repo before this vendoring pass - no local download
+    path recorded; version read from nlohmann\detail\abi_macros.hpp)
+
+    Header-only by design (no .cpp anywhere in the library, ever) - listed here
+    for Solution Explorer only, nothing to compile.
+    ============================================================================
+  -->
+  <ItemGroup>
+    <ClInclude Include="nlohmann\adl_serializer.hpp" />
+    <ClInclude Include="nlohmann\byte_container_with_subtype.hpp" />
+    <ClInclude Include="nlohmann\detail\abi_macros.hpp" />
+    <ClInclude Include="nlohmann\detail\conversions\from_json.hpp" />
+    <ClInclude Include="nlohmann\detail\conversions\to_chars.hpp" />
+    <ClInclude Include="nlohmann\detail\conversions\to_json.hpp" />
+    <ClInclude Include="nlohmann\detail\exceptions.hpp" />
+    <ClInclude Include="nlohmann\detail\hash.hpp" />
+    <ClInclude Include="nlohmann\detail\input\binary_reader.hpp" />
+    <ClInclude Include="nlohmann\detail\input\input_adapters.hpp" />
+    <ClInclude Include="nlohmann\detail\input\json_sax.hpp" />
+    <ClInclude Include="nlohmann\detail\input\lexer.hpp" />
+    <ClInclude Include="nlohmann\detail\input\parser.hpp" />
+    <ClInclude Include="nlohmann\detail\input\position_t.hpp" />
+    <ClInclude Include="nlohmann\detail\iterators\internal_iterator.hpp" />
+    <ClInclude Include="nlohmann\detail\iterators\iter_impl.hpp" />
+    <ClInclude Include="nlohmann\detail\iterators\iteration_proxy.hpp" />
+    <ClInclude Include="nlohmann\detail\iterators\iterator_traits.hpp" />
+    <ClInclude Include="nlohmann\detail\iterators\json_reverse_iterator.hpp" />
+    <ClInclude Include="nlohmann\detail\iterators\primitive_iterator.hpp" />
+    <ClInclude Include="nlohmann\detail\json_custom_base_class.hpp" />
+    <ClInclude Include="nlohmann\detail\json_pointer.hpp" />
+    <ClInclude Include="nlohmann\detail\json_ref.hpp" />
+    <ClInclude Include="nlohmann\detail\macro_scope.hpp" />
+    <ClInclude Include="nlohmann\detail\macro_unscope.hpp" />
+    <ClInclude Include="nlohmann\detail\meta\call_std\begin.hpp" />
+    <ClInclude Include="nlohmann\detail\meta\call_std\end.hpp" />
+    <ClInclude Include="nlohmann\detail\meta\cpp_future.hpp" />
+    <ClInclude Include="nlohmann\detail\meta\detected.hpp" />
+    <ClInclude Include="nlohmann\detail\meta\identity_tag.hpp" />
+    <ClInclude Include="nlohmann\detail\meta\is_sax.hpp" />
+    <ClInclude Include="nlohmann\detail\meta\std_fs.hpp" />
+    <ClInclude Include="nlohmann\detail\meta\type_traits.hpp" />
+    <ClInclude Include="nlohmann\detail\meta\void_t.hpp" />
+    <ClInclude Include="nlohmann\detail\output\binary_writer.hpp" />
+    <ClInclude Include="nlohmann\detail\output\output_adapters.hpp" />
+    <ClInclude Include="nlohmann\detail\output\serializer.hpp" />
+    <ClInclude Include="nlohmann\detail\string_concat.hpp" />
+    <ClInclude Include="nlohmann\detail\string_escape.hpp" />
+    <ClInclude Include="nlohmann\detail\value_t.hpp" />
+    <ClInclude Include="nlohmann\json_fwd.hpp" />
+    <ClInclude Include="nlohmann\json.hpp" />
+    <ClInclude Include="nlohmann\ordered_map.hpp" />
+    <ClInclude Include="nlohmann\thirdparty\hedley\hedley_undef.hpp" />
+    <ClInclude Include="nlohmann\thirdparty\hedley\hedley.hpp" />
+  </ItemGroup>
+
+  <!--
+    ============================================================================
+    spdlog 1.17.0
+    Source:      https://github.com/gabime/spdlog
+    Downloaded:  C:\Users\SemykinVD\Downloads\spdlog-1.17.0
+
+    Compiled into this static lib (SPDLOG_COMPILED_LIB). Bundled fmt is
+    compiled via src\bundled_fmtlib_format.cpp - do NOT also link an external
+    fmt.lib, or you get duplicate / mismatched fmt::vN symbols.
+    spdlog\fmt\format.h is a small compatibility shim (not upstream) - see its
+    own header comment for why it exists.
+    ============================================================================
+  -->
+  <ItemGroup>
+    <ClInclude Include="spdlog\async_logger-inl.h" />
+    <ClInclude Include="spdlog\async_logger.h" />
+    <ClInclude Include="spdlog\async.h" />
+    <ClInclude Include="spdlog\cfg\argv.h" />
+    <ClInclude Include="spdlog\cfg\env.h" />
+    <ClInclude Include="spdlog\cfg\helpers-inl.h" />
+    <ClInclude Include="spdlog\cfg\helpers.h" />
+    <ClInclude Include="spdlog\common-inl.h" />
+    <ClInclude Include="spdlog\common.h" />
+    <ClInclude Include="spdlog\details\backtracer-inl.h" />
+    <ClInclude Include="spdlog\details\backtracer.h" />
+    <ClInclude Include="spdlog\details\circular_q.h" />
+    <ClInclude Include="spdlog\details\console_globals.h" />
+    <ClInclude Include="spdlog\details\file_helper-inl.h" />
+    <ClInclude Include="spdlog\details\file_helper.h" />
+    <ClInclude Include="spdlog\details\fmt_helper.h" />
+    <ClInclude Include="spdlog\details\log_msg_buffer-inl.h" />
+    <ClInclude Include="spdlog\details\log_msg_buffer.h" />
+    <ClInclude Include="spdlog\details\log_msg-inl.h" />
+    <ClInclude Include="spdlog\details\log_msg.h" />
+    <ClInclude Include="spdlog\details\mpmc_blocking_q.h" />
+    <ClInclude Include="spdlog\details\null_mutex.h" />
+    <ClInclude Include="spdlog\details\os-inl.h" />
+    <ClInclude Include="spdlog\details\os.h" />
+    <ClInclude Include="spdlog\details\periodic_worker-inl.h" />
+    <ClInclude Include="spdlog\details\periodic_worker.h" />
+    <ClInclude Include="spdlog\details\registry-inl.h" />
+    <ClInclude Include="spdlog\details\registry.h" />
+    <ClInclude Include="spdlog\details\synchronous_factory.h" />
+    <ClInclude Include="spdlog\details\tcp_client-windows.h" />
+    <ClInclude Include="spdlog\details\tcp_client.h" />
+    <ClInclude Include="spdlog\details\thread_pool-inl.h" />
+    <ClInclude Include="spdlog\details\thread_pool.h" />
+    <ClInclude Include="spdlog\details\udp_client-windows.h" />
+    <ClInclude Include="spdlog\details\udp_client.h" />
+    <ClInclude Include="spdlog\details\windows_include.h" />
+    <ClInclude Include="spdlog\fmt\bin_to_hex.h" />
+    <ClInclude Include="spdlog\fmt\bundled\args.h" />
+    <ClInclude Include="spdlog\fmt\bundled\base.h" />
+    <ClInclude Include="spdlog\fmt\bundled\chrono.h" />
+    <ClInclude Include="spdlog\fmt\bundled\color.h" />
+    <ClInclude Include="spdlog\fmt\bundled\compile.h" />
+    <ClInclude Include="spdlog\fmt\bundled\core.h" />
+    <ClInclude Include="spdlog\fmt\bundled\format-inl.h" />
+    <ClInclude Include="spdlog\fmt\bundled\format.h" />
+    <ClInclude Include="spdlog\fmt\bundled\os.h" />
+    <ClInclude Include="spdlog\fmt\bundled\ostream.h" />
+    <ClInclude Include="spdlog\fmt\bundled\printf.h" />
+    <ClInclude Include="spdlog\fmt\bundled\ranges.h" />
+    <ClInclude Include="spdlog\fmt\bundled\std.h" />
+    <ClInclude Include="spdlog\fmt\bundled\xchar.h" />
+    <ClInclude Include="spdlog\fmt\chrono.h" />
+    <ClInclude Include="spdlog\fmt\compile.h" />
+    <ClInclude Include="spdlog\fmt\fmt.h" />
+    <ClInclude Include="spdlog\fmt\format.h" />
+    <ClInclude Include="spdlog\fmt\ostr.h" />
+    <ClInclude Include="spdlog\fmt\ranges.h" />
+    <ClInclude Include="spdlog\fmt\std.h" />
+    <ClInclude Include="spdlog\fmt\xchar.h" />
+    <ClInclude Include="spdlog\formatter.h" />
+    <ClInclude Include="spdlog\fwd.h" />
+    <ClInclude Include="spdlog\logger-inl.h" />
+    <ClInclude Include="spdlog\logger.h" />
+    <ClInclude Include="spdlog\mdc.h" />
+    <ClInclude Include="spdlog\pattern_formatter-inl.h" />
+    <ClInclude Include="spdlog\pattern_formatter.h" />
+    <ClInclude Include="spdlog\sinks\android_sink.h" />
+    <ClInclude Include="spdlog\sinks\ansicolor_sink-inl.h" />
+    <ClInclude Include="spdlog\sinks\ansicolor_sink.h" />
+    <ClInclude Include="spdlog\sinks\base_sink-inl.h" />
+    <ClInclude Include="spdlog\sinks\base_sink.h" />
+    <ClInclude Include="spdlog\sinks\basic_file_sink-inl.h" />
+    <ClInclude Include="spdlog\sinks\basic_file_sink.h" />
+    <ClInclude Include="spdlog\sinks\callback_sink.h" />
+    <ClInclude Include="spdlog\sinks\daily_file_sink.h" />
+    <ClInclude Include="spdlog\sinks\dist_sink.h" />
+    <ClInclude Include="spdlog\sinks\dup_filter_sink.h" />
+    <ClInclude Include="spdlog\sinks\hourly_file_sink.h" />
+    <ClInclude Include="spdlog\sinks\kafka_sink.h" />
+    <ClInclude Include="spdlog\sinks\mongo_sink.h" />
+    <ClInclude Include="spdlog\sinks\msvc_sink.h" />
+    <ClInclude Include="spdlog\sinks\null_sink.h" />
+    <ClInclude Include="spdlog\sinks\ostream_sink.h" />
+    <ClInclude Include="spdlog\sinks\qt_sinks.h" />
+    <ClInclude Include="spdlog\sinks\ringbuffer_sink.h" />
+    <ClInclude Include="spdlog\sinks\rotating_file_sink-inl.h" />
+    <ClInclude Include="spdlog\sinks\rotating_file_sink.h" />
+    <ClInclude Include="spdlog\sinks\sink-inl.h" />
+    <ClInclude Include="spdlog\sinks\sink.h" />
+    <ClInclude Include="spdlog\sinks\stdout_color_sinks-inl.h" />
+    <ClInclude Include="spdlog\sinks\stdout_color_sinks.h" />
+    <ClInclude Include="spdlog\sinks\stdout_sinks-inl.h" />
+    <ClInclude Include="spdlog\sinks\stdout_sinks.h" />
+    <ClInclude Include="spdlog\sinks\syslog_sink.h" />
+    <ClInclude Include="spdlog\sinks\systemd_sink.h" />
+    <ClInclude Include="spdlog\sinks\tcp_sink.h" />
+    <ClInclude Include="spdlog\sinks\udp_sink.h" />
+    <ClInclude Include="spdlog\sinks\win_eventlog_sink.h" />
+    <ClInclude Include="spdlog\sinks\wincolor_sink-inl.h" />
+    <ClInclude Include="spdlog\sinks\wincolor_sink.h" />
+    <ClInclude Include="spdlog\spdlog-inl.h" />
+    <ClInclude Include="spdlog\spdlog.h" />
+    <ClInclude Include="spdlog\stopwatch.h" />
+    <ClInclude Include="spdlog\tweakme.h" />
+    <ClInclude Include="spdlog\version.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="spdlog\src\async.cpp" />
+    <ClCompile Include="spdlog\src\bundled_fmtlib_format.cpp" />
+    <ClCompile Include="spdlog\src\cfg.cpp" />
+    <ClCompile Include="spdlog\src\color_sinks.cpp" />
+    <ClCompile Include="spdlog\src\file_sinks.cpp" />
+    <ClCompile Include="spdlog\src\spdlog.cpp" />
+    <ClCompile Include="spdlog\src\stdout_sinks.cpp" />
+  </ItemGroup>
+
+  <!--
+    ============================================================================
+    iconv - win-iconv 0.0.10
+    Source:      https://github.com/win-iconv/win-iconv
+    Downloaded:  C:\Users\SemykinVD\Downloads\win-iconv-0.0.10
+
+    Windows-only reimplementation of iconv_open/iconv/iconv_close using the
+    Win32 API (no Autotools/config.h generation needed, unlike GNU libiconv).
+    No dllexport/dllimport macros in this library, so no static-build define is
+    needed the way AMQP_STATIC/SimpleAmqpClient_EXPORTS are needed above.
+    iconv\linux\ intentionally has no vendored source: glibc already provides
+    iconv() natively - see iconv\linux\README.md.
+    ============================================================================
+  -->
+  <ItemGroup>
+    <ClCompile Include="iconv\win\win_iconv.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="iconv\win\iconv.h" />
+    <ClInclude Include="iconv\win\localcharset.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="iconv\linux\README.md" />
+  </ItemGroup>
+
+  <!--
+    ============================================================================
+    Boost.Chrono (subset of Boost 1.88.0)
+    Source:      E:\local\Boost\boost_1_88_0
+    Extracted:   boost\ via Boost.BCP (`bcp chrono <dest>`) - see boost\README.md
+
+    Only the Chrono .cpp units are compiled here. Headers (Chrono plus
+    header-only libs used by the app: multi_array, outcome, asio,
+    circular_buffer, uuid, ...) live under boost\boost\. There is no
+    $(BOOST_ROOT) - PeakExpertNoGUI includes only this vendored tree.
+    SimpleAmqpClient is the only consumer of Boost.Chrono in this tree.
+    ============================================================================
+  -->
+  <ItemGroup>
+    <ClCompile Include="boost\libs\chrono\src\chrono.cpp" />
+    <ClCompile Include="boost\libs\chrono\src\process_cpu_clocks.cpp" />
+    <ClCompile Include="boost\libs\chrono\src\thread_clock.cpp" />
+  </ItemGroup>
+
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

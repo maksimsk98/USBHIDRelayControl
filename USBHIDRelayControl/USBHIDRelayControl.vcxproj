@@ -26,6 +26,13 @@
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Target Name="CopyNativeBuildArtifacts" AfterTargets="Build">
+    <ItemGroup>
+      <_NativeToOutDir Include="$(ProjectDir)..\3rdparty\$(Platform)\$(Configuration)\3rdparty.lib" Condition="Exists('$(ProjectDir)..\3rdparty\$(Platform)\$(Configuration)\3rdparty.lib')" />
+      <_NativeToOutDir Include="$(ProjectDir)..\3rdparty\$(Platform)\$(Configuration)\3rdparty.pdb" Condition="Exists('$(ProjectDir)..\3rdparty\$(Platform)\$(Configuration)\3rdparty.pdb')" />
+    </ItemGroup>
+    <Copy SourceFiles="@(_NativeToOutDir)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" Condition="'@(_NativeToOutDir)' != ''" />
+  </Target>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
@@ -102,13 +109,16 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)force_include;$(ProjectDir)..\3rdparty;$(ProjectDir)..\3rdparty\spdlog;$(ProjectDir)..\3rdparty\spdlog\fmt;$(ProjectDir)..\3rdparty\iconv\win;$(ProjectDir)..\3rdparty\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\3rdparty\hidapi\windows\lib\hidapi.lib
+      <AdditionalDependencies>3rdparty.lib;hidapi.lib
 ;hid.lib;
-Cfgmgr32.lib;setupapi.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+Cfgmgr32.lib;setupapi.lib;Ws2_32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\3rdparty\$(Platform)\$(Configuration);..\3rdparty\hidapi\windows\lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -126,7 +136,16 @@ Cfgmgr32.lib;setupapi.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AMQP\BaseAMQP.cpp" />
+    <ClCompile Include="AMQP\PanelAMQP.cpp" />
+    <ClCompile Include="Core\ThreadedTimer.cpp" />
     <ClCompile Include="USBHIDRelayControl.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AMQP\BaseAMQP.h" />
+    <ClInclude Include="AMQP\Constants.hpp" />
+    <ClInclude Include="AMQP\PanelAMQP.hpp" />
+    <ClInclude Include="Core\ThreadedTimer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
