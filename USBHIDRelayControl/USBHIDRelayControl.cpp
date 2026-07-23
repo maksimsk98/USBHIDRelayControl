@@ -6,6 +6,18 @@
 #include "AMQP/PanelAMQP.hpp"
 #pragma comment(lib, "hidapi.lib")
 
+#define LOCAL_MODE 0
+#if LOCAL_MODE
+    const std::string kIpAddress = "localhost";
+#else
+    const std::string kIpAddress = "172.16.104.10";
+    const int kPort = 5672;
+    const std::string kUsername = "myuser";
+    const std::string kPassword = "mypassword";
+    const std::string kVhost = "/";
+    const int kFrameMax = 131072;
+#endif
+
 constexpr unsigned short kVid = 0x0519;
 constexpr unsigned short kPid = 0x2018;
 
@@ -150,11 +162,23 @@ int main()
 
     std::cout << "Off All relay.\n\n";
 
+#if LOCAL_MODE
     auto channel =
         AmqpClient::Channel::Create(
-            "localhost"
+            kIpAddress
         );
-
+#else
+    auto channel =
+        AmqpClient::Channel::Create(
+            kIpAddress,
+            kPort,
+            kUsername,
+            kPassword,
+            kVhost,
+            kFrameMax
+        );
+#endif
+   
     auto panel =
         std::make_unique<PanelAMQP>(
             std::chrono::milliseconds(100),
