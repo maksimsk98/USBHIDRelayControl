@@ -166,15 +166,16 @@ void PanelAMQP::PulseRelay(int relay)
 
 int PanelAMQP::GetUserRelay(const std::string& user) const
 {
-    if (user == userAlexander)   return 1;
-    if (user == userKonstantin)  return 2;
-    if (user == userMaxim)       return 3;
-    if (user == userVladislav)   return 4;
+    if (user == userKonstantin)  return 1;
+    if (user == userAlexander)   return 2;
+    if (user == userVladislav)   return 3;
+    if (user == userMaxim)       return 4;
     if (user == userBogdan)      return 5;
 
     return 0;
 }
 
+# if 0
 void PanelAMQP::updateState(const json& command)
 {
     std::string activeUser =
@@ -209,9 +210,24 @@ void PanelAMQP::updateState(const json& command)
         // поэтому если должно быть включено —
         // включаем его повторно.
         //
+#if 0
         if (powerOn)
         {
             PulseRelay(6);
+        }
+#endif
+        if (m_powerOn)
+        {
+            SendCommand(GetOffCommand(6));
+
+            m_powerOn = powerOn;
+        }
+        else
+        {
+            SendCommand(GetOnCommand(6));
+
+            std::this_thread::sleep_for(
+                std::chrono::milliseconds(1500));
         }
 
         m_powerOn = powerOn;
@@ -223,14 +239,106 @@ void PanelAMQP::updateState(const json& command)
     // Пользователь тот же.
     // Переключаем только питание.
     //
+#if 0
     if (powerOn != m_powerOn)
     {
         PulseRelay(6);
 
         m_powerOn = powerOn;
     }
-}
+#endif
+    if (m_powerOn == true)
+    {
+        SendCommand(GetOffCommand(6));
 
+        m_powerOn = powerOn;    
+    }
+    else
+    {
+        SendCommand(GetOnCommand(6));
+
+        std::this_thread::sleep_for(
+            std::chrono::milliseconds(1500));
+    }
+}
+#endif
+
+void PanelAMQP::updateState(const json& command)
+{
+    const std::string activeUser =
+        command.value("activeUser", "");
+
+    const bool powerOn =
+        command.value("powerOn", false);
+
+    //
+    // Пользователь изменился
+    //
+    if (activeUser != m_activeUser)
+    {
+        //
+        // Полностью сбрасываем все реле.
+        // После этой команды питание считается выключенным.
+        //
+        SendCommand(AllOff);
+
+        std::this_thread::sleep_for(
+            std::chrono::milliseconds(1500));
+
+        //
+        // Выбираем пользователя.
+        //
+        const int relay =
+            GetUserRelay(activeUser);
+
+        if (relay != 0)
+            PulseRelay(relay);
+
+        m_activeUser = activeUser;
+        m_powerOn = false;
+
+        //
+        // Если питание должно быть включено —
+        // включаем его отдельной командой.
+        //
+        if (powerOn)
+        {
+            SendCommand(GetOnCommand(6));
+
+            std::this_thread::sleep_for(
+                std::chrono::milliseconds(1500));
+
+            m_powerOn = true;
+        }
+
+        return;
+    }
+
+    //
+    // Пользователь не изменился.
+    // Если состояние питания тоже не изменилось —
+    // ничего делать не нужно.
+    //
+    if (powerOn == m_powerOn)
+        return;
+
+    //
+    // Переключаем только питание.
+    //
+    if (powerOn)
+    {
+        SendCommand(GetOnCommand(6));
+    }
+    else
+    {
+        SendCommand(GetOffCommand(6));
+    }
+
+    std::this_thread::sleep_for(
+        std::chrono::milliseconds(1500));
+
+    m_powerOn = powerOn;
+}
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 void PanelAMQP::ProcessCommand(const json& command)
